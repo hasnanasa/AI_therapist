@@ -1,0 +1,12 @@
+use("psych_support")
+
+print("Total symptoms:", db.symptoms.countDocuments())
+print("Missing problems field:", db.symptoms.countDocuments({ problems: { $exists: false } }))
+print("---")
+print("rum_ primary:", db.symptoms.countDocuments({ _id: /^rum_/ }))
+print("pro_ primary:", db.symptoms.countDocuments({ _id: /^pro_/ }))
+print("sel_ primary:", db.symptoms.countDocuments({ _id: /^sel_/ }))
+print("bur_ primary:", db.symptoms.countDocuments({ _id: /^bur_/ }))
+print("avo_ primary:", db.symptoms.countDocuments({ _id: /^avo_/ }))
+print("---")
+print("Shared (2+ problems):", db.symptoms.countDocuments({ $expr: { $gte: [{ $size: "$problems" }, 2] } }))
